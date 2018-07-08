@@ -1,0 +1,14 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.p5Canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
