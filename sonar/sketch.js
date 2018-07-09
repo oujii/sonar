@@ -13,12 +13,43 @@ function setup() {
   tone3 = loadSound("three.wav");
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  ellipseMode(CENTER);
   noFill();
   // topLayer = createGraphics(windowWidth, windowHeight);
   // noStroke();
   for (var i = 0; i < 5; i++) {
-    var x = Math.floor(Math.random() * windowWidth - 25);
-    var y = Math.floor(Math.random() * windowHeight - 25);
+    // För att inte få X eller Y att fastna i rektangeln
+    var x1 = windowWidth / 2 - 125;
+    var xmer = random(0, x1); // 0 till vänster sida
+    var x2 = windowWidth / 2 + 125;
+    var xmindre = random(x2, windowWidth); // rektangelns högra sida till slutet av sidan.
+
+    var y1 = windowHeight / 2 - 125;
+    var ymer = random(0, y1); // 0 till topp sida
+    var y2 = windowHeight / 2 + 125;
+    var ymindre = random(y2, windowHeight); // rektangelns undre sida till slutet av sidan.
+
+    var x = random(0, windowWidth);
+    var y = random(0, windowHeight);
+    if (x > x1) {
+      var x = xmer;
+      console.log("random blev mer än vänstra sidan");
+    } else if (x < x2) {
+      var x = xmindre;
+      console.log("Random blev mindre än högra sidan");
+    } else {
+      console.log("random kördes utan att fastna i rektangeln");
+    }
+
+    if (y > y1) {
+      var y = ymer;
+      console.log("random blev mer än topp sidan");
+    } else if (y < y2) {
+      var y = ymindre;
+      console.log("Random blev mindre än undre sidan");
+    } else {
+      console.log("random kördes utan att fastna i rektangeln");
+    }
 
     circles[i] = [x, y];
   }
@@ -35,6 +66,11 @@ function draw() {
   ellipse(circles[3][0], circles[3][1], 50, 50);
   stroke("purple");
   ellipse(circles[4][0], circles[4][1], 50, 50);
+
+  push(); // Startar ny design för rektangeln
+  fill(255, 0, 0);
+  rect(windowWidth / 2, windowHeight / 2, 250, 250);
+  pop(); //Avslutar rektangelns stil
 }
 
 function mouseMoved() {
