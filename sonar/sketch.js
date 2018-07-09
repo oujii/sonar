@@ -1,6 +1,9 @@
 var circles = {};
 var deletedCircles = [];
-var highscore = document.getElementsByClassName("highscore")[0];
+var highscore = 0;
+var highscoreElement = document.getElementsByClassName("highscore")[0];
+var timerElement = document.getElementsByClassName("timer")[0];
+
 var playMode = "sustain";
 var tone1;
 var tone2;
@@ -8,6 +11,8 @@ var tone3;
 var hitbox1 = 75;
 var hitbox2 = 50;
 var hitbox3 = 25;
+
+let counter = 0;
 
 function checkCoordinates(circleName, hitbox) {
   if (
@@ -30,7 +35,15 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
   ellipseMode(CENTER);
+  stroke("#292227");
+  strokeWeight(10);
   noFill();
+
+  function timeIt() {
+    counter++;
+    timerElement.innerHTML = counter;
+  }
+  setInterval(timeIt, 1000);
 
   for (var i = 0; i < 5; i++) {
     // För att inte få X eller Y att fastna i rektangeln
@@ -65,9 +78,10 @@ function setup() {
 }
 
 function draw() {
-  background("white");
+  background(236, 235, 236);
   push(); // Startar ny design för rektangeln
-  fill(255, 0, 0);
+  fill("rgba(71, 15, 244, 1)");
+  noStroke();
   rect(windowWidth / 2, windowHeight / 2, 250, 250);
   pop(); // Avslutar rektangelns stil
   renderCircles();
@@ -128,30 +142,40 @@ function mouseMoved() {
   }
 }
 
+function updateHighscore() {
+  highscore = highscore + 100;
+  highscoreElement.innerHTML = `${highscore}`;
+}
+
 function mouseClicked() {
   if (checkCoordinates(0, hitbox3)) {
     deletedCircles.push(0);
     delete circles[0];
+    updateHighscore();
     redraw();
     renderCircles();
   } else if (checkCoordinates(1, hitbox3)) {
     deletedCircles.push(1);
     delete circles[1];
+    updateHighscore();
     redraw();
     renderCircles();
   } else if (checkCoordinates(2, hitbox3)) {
     deletedCircles.push(2);
     delete circles[2];
+    updateHighscore();
     redraw();
     renderCircles();
   } else if (checkCoordinates(3, hitbox3)) {
     deletedCircles.push(3);
     delete circles[3];
+    updateHighscore();
     redraw();
     renderCircles();
   } else if (checkCoordinates(4, hitbox3)) {
     deletedCircles.push(4);
     delete circles[4];
+    updateHighscore();
     redraw();
     renderCircles();
   }
