@@ -1,5 +1,6 @@
 var circles = {};
 var deletedCircles = [];
+var highscore = document.getElementsByClassName("highscore")[0];
 var playMode = "sustain";
 var tone1;
 var tone2;
@@ -47,22 +48,16 @@ function setup() {
     var y = random(0, windowHeight);
     if (x > x1) {
       var x = xmer;
-      console.log("random blev mer än vänstra sidan");
     } else if (x < x2) {
       var x = xmindre;
-      console.log("Random blev mindre än högra sidan");
     } else {
-      console.log("random kördes utan att fastna i rektangeln");
     }
 
     if (y > y1) {
       var y = ymer;
-      console.log("random blev mer än topp sidan");
     } else if (y < y2) {
       var y = ymindre;
-      console.log("Random blev mindre än undre sidan");
     } else {
-      console.log("random kördes utan att fastna i rektangeln");
     }
 
     circles[i] = [x, y];
@@ -74,33 +69,62 @@ function draw() {
   push(); // Startar ny design för rektangeln
   fill(255, 0, 0);
   rect(windowWidth / 2, windowHeight / 2, 250, 250);
-  pop(); //Avslutar rektangelns stil
+  pop(); // Avslutar rektangelns stil
   renderCircles();
   noLoop();
 }
 
 function mouseMoved() {
   if (checkCoordinates(0, hitbox1)) {
-    console.log("*** 0 *** - första tonen");
     tone1.play();
 
     if (checkCoordinates(0, hitbox2)) {
-      console.log("*** 0 *** - andra tonen");
       tone2.play();
 
       if (checkCoordinates(0, hitbox3)) {
-        console.log("*** 0 *** - tredje tonen");
         tone3.play();
       }
     }
   } else if (checkCoordinates(1, hitbox1)) {
-    console.log("*** 1 ***");
+    tone1.play();
+
+    if (checkCoordinates(1, hitbox2)) {
+      tone2.play();
+
+      if (checkCoordinates(1, hitbox3)) {
+        tone3.play();
+      }
+    }
   } else if (checkCoordinates(2, hitbox1)) {
-    console.log("*** 2 ***");
+    tone1.play();
+
+    if (checkCoordinates(2, hitbox2)) {
+      tone2.play();
+
+      if (checkCoordinates(2, hitbox3)) {
+        tone3.play();
+      }
+    }
   } else if (checkCoordinates(3, hitbox1)) {
-    console.log("*** 3 ***");
+    tone1.play();
+
+    if (checkCoordinates(3, hitbox2)) {
+      tone2.play();
+
+      if (checkCoordinates(3, hitbox3)) {
+        tone3.play();
+      }
+    }
   } else if (checkCoordinates(4, hitbox1)) {
-    console.log("*** 4 ***");
+    tone1.play();
+
+    if (checkCoordinates(4, hitbox2)) {
+      tone2.play();
+
+      if (checkCoordinates(4, hitbox3)) {
+        tone3.play();
+      }
+    }
   }
 }
 
@@ -108,6 +132,26 @@ function mouseClicked() {
   if (checkCoordinates(0, hitbox3)) {
     deletedCircles.push(0);
     delete circles[0];
+    redraw();
+    renderCircles();
+  } else if (checkCoordinates(1, hitbox3)) {
+    deletedCircles.push(1);
+    delete circles[1];
+    redraw();
+    renderCircles();
+  } else if (checkCoordinates(2, hitbox3)) {
+    deletedCircles.push(2);
+    delete circles[2];
+    redraw();
+    renderCircles();
+  } else if (checkCoordinates(3, hitbox3)) {
+    deletedCircles.push(3);
+    delete circles[3];
+    redraw();
+    renderCircles();
+  } else if (checkCoordinates(4, hitbox3)) {
+    deletedCircles.push(4);
+    delete circles[4];
     redraw();
     renderCircles();
   }
