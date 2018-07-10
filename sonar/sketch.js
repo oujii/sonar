@@ -63,52 +63,67 @@ function draw() {
 
 function mouseMoved() {
   if (checkCoordinates(0, hitboxGoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(0, hitboxGoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(0, circleHitbox)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(1, hitboxGoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(1, hitboxGoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(1, circleHitbox)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(2, hitboxGoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(2, hitboxGoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(2, circleHitbox)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(3, hitboxGoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(3, hitboxGoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(3, circleHitbox)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(4, hitboxGoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(4, hitboxGoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(4, circleHitbox)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
