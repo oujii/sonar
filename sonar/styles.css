@@ -8,7 +8,7 @@
 }
 
 html {
-  color: white;
+  color: black;
   font-family: monospace;
 }
 
@@ -21,6 +21,64 @@ body {
   height: 100vh;
 }
 
+.vortex {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 100%;
+  background-color: yellow;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.overlayTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 100%;
+  height: calc(100% / 2 - 125px);
+  pointer-events: none;
+}
+
+.overlayBottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  width: 100%;
+  height: calc(100% / 2 - 124px);
+  pointer-events: none;
+}
+
+.overlayLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: calc(100% / 2 - 125px);
+  height: 100%;
+  pointer-events: none;
+}
+
+.overlayRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  width: calc(100% / 2 - 125px);
+  height: 100%;
+  pointer-events: none;
+}
+
 .p5Canvas {
   position: absolute;
   top: 0;
@@ -28,7 +86,9 @@ body {
   z-index: -1;
 }
 
-.highscore {
+.highscore,
+.timer {
   /* font-size: 18px; */
   text-align: center;
+  z-index: 1;
 }
