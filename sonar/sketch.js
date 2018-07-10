@@ -4,7 +4,6 @@ var highscore = 0;
 var highscoreElement = document.getElementsByClassName("highscore")[0];
 var timerElement = document.getElementsByClassName("timer")[0];
 
-var playMode = "sustain";
 var tone1;
 var tone2;
 var tone3;
@@ -17,6 +16,11 @@ var goalLeftSide;
 var goalRightSide;
 var goalTopSide;
 var goalBottomSide;
+
+var a = 0;
+var b = 0;
+var targeta = 0;
+var targetb = 0;
 
 let counter = 0;
 
@@ -88,7 +92,14 @@ function draw() {
   push(); // Startar ny design för rektangeln
   fill("rgba(71, 15, 244, 1)");
   noStroke();
-  rect(windowWidth / 2, windowHeight / 2, 250, 250);
+  var easing = 0.2;
+  var diffa = targeta - a;
+  a += diffa * easing;
+  var diffb = targetb - b;
+  b += diffb * easing;
+
+  rect(windowWidth / 2, windowHeight / 2, a, b);
+  rect(windowWidth / 2, windowHeight / 2, 200, 200);
   pop(); // Avslutar rektangelns stil
   renderCircles();
   if (dragging == true) {
@@ -110,6 +121,10 @@ function draw() {
     dragging = false;
     deletedCircles.push(draggedCircle);
     delete circles[draggedCircle];
+
+    targeta = 250;
+    targetb = 250;
+
     updateHighscore();
     redraw();
     renderCircles();
@@ -118,52 +133,67 @@ function draw() {
 
 function mouseMoved() {
   if (checkCoordinates(0, hitbogoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(0, hitbogoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(0, hitbox3)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(1, hitbogoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(1, hitbogoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(1, hitbox3)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(2, hitbogoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(2, hitbogoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(2, hitbox3)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(3, hitbogoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(3, hitbogoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(3, hitbox3)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
   } else if (checkCoordinates(4, hitbogoalLeftSide)) {
+    tone1.playMode("untilDone");
     tone1.play();
 
     if (checkCoordinates(4, hitbogoalRightSide)) {
+      tone2.playMode("untilDone");
       tone2.play();
 
       if (checkCoordinates(4, hitbox3)) {
+        tone3.playMode("sustain");
         tone3.play();
       }
     }
