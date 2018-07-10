@@ -55,8 +55,9 @@ function draw() {
   pop(); // End of overlay design
 
   push(); // Start of new design for the goal
-  fill("rgba(71, 15, 244, 1)");
-  noStroke();
+  noFill();
+  stroke(255, 255, 255);
+  strokeWeight(1);
   ellipse(windowWidth / 2, windowHeight / 2, sizeX, sizeY);
   pop(); // End of new design for the goal
 }
@@ -132,8 +133,8 @@ function mouseMoved() {
 
 function updateHighscore() {
   goalScored = true;
-  highscore += 100;
-  highscoreElement.innerHTML = `${highscore}`;
+  highscore += 1;
+  highscoreElement.innerHTML = `${highscore}/5`;
 }
 
 function mouseClicked() {
