@@ -1,24 +1,153 @@
 var circles = {};
 var deletedCircles = [];
 var highscore = 0;
+var goalSize = 250;
 var highscoreElement = document.getElementsByClassName("highscore")[0];
 var timerElement = document.getElementsByClassName("timer")[0];
 
-var playMode = "sustain";
 var tone1;
 var tone2;
 var tone3;
-var hitbogoalLeftSide = 75;
-var hitbogoalRightSide = 50;
-var hitbox3 = 25;
+var hitboxGoalLeftSide = 75;
+var hitboxGoalRightSide = 50;
+var circleHitbox = 25;
 var dragging = false;
 var draggedCircle;
-var goalLeftSide;
-var goalRightSide;
-var goalTopSide;
-var goalBottomSide;
 
-let counter = 0;
+let timer = 0;
+
+var sizeX = 250;
+var sizeY = 250;
+var targetSizeX = 250;
+var targetSizeY = 250;
+var goalScored = false;
+
+function setup() {
+  tone1 = loadSound("one.wav");
+  tone2 = loadSound("two.wav");
+  tone3 = loadSound("three.wav");
+  createCanvas(windowWidth, windowHeight);
+  rectMode(CENTER);
+  ellipseMode(CENTER);
+  stroke("#292227");
+  strokeWeight(10);
+  noFill();
+  createCircleCoordinates();
+
+  function timeIt() {
+    timer++;
+    timerElement.innerHTML = timer;
+  }
+  setInterval(timeIt, 1000);
+}
+
+function draw() {
+  background(236, 235, 236);
+
+  goalAnimation();
+  renderCircles();
+  circleIsBeingDragged();
+
+  push(); // Start of overlay design
+  fill("rgba(0, 0, 0, 1)");
+  noStroke();
+  rect(windowWidth / 2, windowHeight / 2, windowWidth, windowHeight);
+  pop(); // End of overlay design
+
+  push(); // Start of new design for the goal
+  fill("rgba(71, 15, 244, 1)");
+  noStroke();
+  ellipse(windowWidth / 2, windowHeight / 2, sizeX, sizeY);
+  pop(); // End of new design for the goal
+}
+
+function mouseMoved() {
+  if (checkCoordinates(0, hitboxGoalLeftSide)) {
+    tone1.play();
+
+    if (checkCoordinates(0, hitboxGoalRightSide)) {
+      tone2.play();
+
+      if (checkCoordinates(0, circleHitbox)) {
+        tone3.play();
+      }
+    }
+  } else if (checkCoordinates(1, hitboxGoalLeftSide)) {
+    tone1.play();
+
+    if (checkCoordinates(1, hitboxGoalRightSide)) {
+      tone2.play();
+
+      if (checkCoordinates(1, circleHitbox)) {
+        tone3.play();
+      }
+    }
+  } else if (checkCoordinates(2, hitboxGoalLeftSide)) {
+    tone1.play();
+
+    if (checkCoordinates(2, hitboxGoalRightSide)) {
+      tone2.play();
+
+      if (checkCoordinates(2, circleHitbox)) {
+        tone3.play();
+      }
+    }
+  } else if (checkCoordinates(3, hitboxGoalLeftSide)) {
+    tone1.play();
+
+    if (checkCoordinates(3, hitboxGoalRightSide)) {
+      tone2.play();
+
+      if (checkCoordinates(3, circleHitbox)) {
+        tone3.play();
+      }
+    }
+  } else if (checkCoordinates(4, hitboxGoalLeftSide)) {
+    tone1.play();
+
+    if (checkCoordinates(4, hitboxGoalRightSide)) {
+      tone2.play();
+
+      if (checkCoordinates(4, circleHitbox)) {
+        tone3.play();
+      }
+    }
+  }
+}
+
+function updateHighscore() {
+  goalScored = true;
+  highscore += 100;
+  highscoreElement.innerHTML = `${highscore}`;
+}
+
+function mouseClicked() {
+  if (checkCoordinates(0, circleHitbox)) {
+    dragging = true;
+    draggedCircle = 0;
+  } else if (checkCoordinates(1, circleHitbox)) {
+    dragging = true;
+    draggedCircle = 1;
+  } else if (checkCoordinates(2, circleHitbox)) {
+    dragging = true;
+    draggedCircle = 2;
+  } else if (checkCoordinates(3, circleHitbox)) {
+    dragging = true;
+    draggedCircle = 3;
+  } else if (checkCoordinates(4, circleHitbox)) {
+    dragging = true;
+    draggedCircle = 4;
+  }
+}
+
+function renderCircles() {
+  for (var i = 0; i < 5; i++) {
+    if (deletedCircles.includes(i)) {
+      continue;
+    }
+    ellipse(circles[i][0], circles[i][1], 50, 50);
+  }
+}
 
 function checkCoordinates(circleName, hitbox) {
   if (
@@ -34,23 +163,7 @@ function checkCoordinates(circleName, hitbox) {
   }
 }
 
-function setup() {
-  tone1 = loadSound("one.wav");
-  tone2 = loadSound("two.wav");
-  tone3 = loadSound("three.wav");
-  createCanvas(windowWidth, windowHeight);
-  rectMode(CENTER);
-  ellipseMode(CENTER);
-  stroke("#292227");
-  strokeWeight(10);
-  noFill();
-
-  function timeIt() {
-    counter++;
-    timerElement.innerHTML = counter;
-  }
-  setInterval(timeIt, 1000);
-
+function createCircleCoordinates() {
   for (var i = 0; i < 5; i++) {
     // För att inte få X eller Y att fastna i rektangeln
     var goalLeftSide = windowWidth / 2 - 125;
@@ -69,28 +182,19 @@ function setup() {
       var x = xStartToGoal;
     } else if (x < goalRightSide) {
       var x = xGoalToEnd;
-    } else {
     }
 
     if (y > goalTopSide) {
       var y = yTopToGoal;
     } else if (y < goalBottomSide) {
       var y = yBottomToGoal;
-    } else {
     }
 
     circles[i] = [x, y];
   }
 }
 
-function draw() {
-  background(236, 235, 236);
-  push(); // Startar ny design för rektangeln
-  fill("rgba(71, 15, 244, 1)");
-  noStroke();
-  rect(windowWidth / 2, windowHeight / 2, 250, 250);
-  pop(); // Avslutar rektangelns stil
-  renderCircles();
+function circleIsBeingDragged() {
   if (dragging == true) {
     circles[draggedCircle][0] = mouseX;
     circles[draggedCircle][1] = mouseY;
@@ -111,122 +215,22 @@ function draw() {
     deletedCircles.push(draggedCircle);
     delete circles[draggedCircle];
     updateHighscore();
-    redraw();
+    targetSizeX += 400;
+    targetSizeY += 400;
     renderCircles();
   }
 }
 
-function mouseMoved() {
-  if (checkCoordinates(0, hitbogoalLeftSide)) {
-    tone1.play();
+function goalAnimation() {
+  var easing = 0.05;
+  var diffx = targetSizeX - sizeX;
+  sizeX += diffx * easing;
+  var diffy = targetSizeY - sizeY;
+  sizeY += diffy * easing;
 
-    if (checkCoordinates(0, hitbogoalRightSide)) {
-      tone2.play();
-
-      if (checkCoordinates(0, hitbox3)) {
-        tone3.play();
-      }
-    }
-  } else if (checkCoordinates(1, hitbogoalLeftSide)) {
-    tone1.play();
-
-    if (checkCoordinates(1, hitbogoalRightSide)) {
-      tone2.play();
-
-      if (checkCoordinates(1, hitbox3)) {
-        tone3.play();
-      }
-    }
-  } else if (checkCoordinates(2, hitbogoalLeftSide)) {
-    tone1.play();
-
-    if (checkCoordinates(2, hitbogoalRightSide)) {
-      tone2.play();
-
-      if (checkCoordinates(2, hitbox3)) {
-        tone3.play();
-      }
-    }
-  } else if (checkCoordinates(3, hitbogoalLeftSide)) {
-    tone1.play();
-
-    if (checkCoordinates(3, hitbogoalRightSide)) {
-      tone2.play();
-
-      if (checkCoordinates(3, hitbox3)) {
-        tone3.play();
-      }
-    }
-  } else if (checkCoordinates(4, hitbogoalLeftSide)) {
-    tone1.play();
-
-    if (checkCoordinates(4, hitbogoalRightSide)) {
-      tone2.play();
-
-      if (checkCoordinates(4, hitbox3)) {
-        tone3.play();
-      }
-    }
-  }
-}
-
-function updateHighscore() {
-  highscore = highscore + 100;
-  highscoreElement.innerHTML = `${highscore}`;
-}
-
-function mouseClicked() {
-  if (checkCoordinates(0, hitbox3)) {
-    dragging = true;
-    draggedCircle = 0;
-  } else if (checkCoordinates(1, hitbox3)) {
-    dragging = true;
-    draggedCircle = 1;
-  } else if (checkCoordinates(2, hitbox3)) {
-    dragging = true;
-    draggedCircle = 2;
-  } else if (checkCoordinates(3, hitbox3)) {
-    dragging = true;
-    draggedCircle = 3;
-  } else if (checkCoordinates(4, hitbox3)) {
-    dragging = true;
-    draggedCircle = 4;
-  }
-}
-
-// function mouseClicked() {
-//   if (checkCoordinates(0, hitbox3)) {
-//     dragging = true;
-//     // circles[0][0]; är x
-//     // circles[0][1]; är  y
-//   } else if (checkCoordinates(1, hitbox3)) {
-//     deletedCircles.push(1);
-//     delete circles[1];
-//     redraw();
-//     renderCircles();
-//   } else if (checkCoordinates(2, hitbox3)) {
-//     deletedCircles.push(2);
-//     delete circles[2];
-//     redraw();
-//     renderCircles();
-//   } else if (checkCoordinates(3, hitbox3)) {
-//     deletedCircles.push(3);
-//     delete circles[3];
-//     redraw();
-//     renderCircles();
-//   } else if (checkCoordinates(4, hitbox3)) {
-//     deletedCircles.push(4);
-//     delete circles[4];
-//     redraw();
-//     renderCircles();
-//   }
-// }
-
-function renderCircles() {
-  for (var i = 0; i < 5; i++) {
-    if (deletedCircles.includes(i)) {
-      continue;
-    }
-    ellipse(circles[i][0], circles[i][1], 50, 50);
+  if (goalScored) {
+    targetSizeX -= 400;
+    targetSizeY -= 400;
+    goalScored = false;
   }
 }
